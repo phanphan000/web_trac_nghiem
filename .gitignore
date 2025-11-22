@@ -1,0 +1,19 @@
+# React
+fe_trac_nghi_nghiem/node_modules/
+fe_trac_nghi_nghiem/dist/
+fe_trac_nghi_nghiem/.env
+
+# Laravel
+be-trac-nghi-nghiem/vendor/
+be-trac-nghi-nghiem/storage/
+be-trac-nghi-nghiem/.env
+be-trac-nghi-nghiem/node_modules/
+
+# Logs
+*.log
+
+# Editor files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

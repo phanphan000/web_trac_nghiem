@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+* {
+    font-family: "Lexend Deca", sans-serif;
+
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+:root {
+    --color-primary: #560e31;
+    --color-secondary: #ef7131;
+    --color-background: #fef7ef;
+    --color-btn: #f7903b;
+    --color-valuecard: #ffebd6;
+
+}
+
+.primary-text-color {
+    color: var(--color-primary);
+}
+
+.secondary-text-color {
+    color: var(--color-secondary);
+}
