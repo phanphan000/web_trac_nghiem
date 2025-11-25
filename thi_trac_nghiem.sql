@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306:3306
--- Thời gian đã tạo: Th10 25, 2025 lúc 07:27 AM
+-- Thời gian đã tạo: Th10 25, 2025 lúc 07:52 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -196,6 +196,15 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '2025-11-24 23:51:16', '2025-11-24 23:51:16'),
+(2, 'teacher', '2025-11-24 23:51:16', '2025-11-24 23:51:16'),
+(3, 'student', '2025-11-24 23:51:16', '2025-11-24 23:51:16');
+
 -- --------------------------------------------------------
 
 --
@@ -209,6 +218,13 @@ CREATE TABLE `role_user` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `role_user`
+--
+
+INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -358,7 +374,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `full_name`, `email`, `class_id`, `avatar_url`, `created_at`, `updated_at`) VALUES
-(1, 'teacher', '$2y$12$OrVxVFNSuveZUxj8/mdfGukH7cWvzJL5pk9MnLSIAScQs797VP9Yy', 'teacher', NULL, 3, NULL, '2025-11-24 23:26:30', '2025-11-24 23:26:30');
+(1, 'teacher', '$2y$12$Lqs3aBlsZO83EyZ/ZXSdGek6uszVY9ahvImMhobn6yIeSHrqFoztK', 'teacher', NULL, 3, NULL, '2025-11-24 23:52:03', '2025-11-24 23:52:03');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -547,13 +563,13 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
