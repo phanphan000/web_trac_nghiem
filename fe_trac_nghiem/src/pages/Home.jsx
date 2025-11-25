@@ -24,7 +24,7 @@ function Section1({ goToSection }) {
           BRAINY LAND
         </h1>
         <p className="text-lg md:text-4xl primary-text-color mb-2 md:mb-3 text-center">
-          Một sân chơi toàn diện cho Math,Science,Tin học
+          Một sân chơi toàn diện cho Math, Science, Tin học
         </p>
         <p className="text-lg md:text-4xl primary-text-color mb-2 md:mb-3 text-center">
           Dành riêng cho Học sinh Ngôi Sao Hoàng Mai.
@@ -350,12 +350,7 @@ function Section5() {
     // navigate("/login");
 
     // validate cơ bản
-    if (
-      !formData.full_name ||
-      !formData.username ||
-      !formData.password ||
-      !formData.email
-    ) {
+    if (!formData.full_name || !formData.username || !formData.password) {
       setMessage("Vui lòng điền đầy đủ thông tin!");
       return;
     }
@@ -406,20 +401,6 @@ function Section5() {
               type="text"
               name="full_name"
               value={formData.full_name}
-              onChange={handleInputChange}
-              className="px-4 md:px-20 py-3 md:py-4 text-center rounded-full border-2 border-orange-400 bg-white focus:outline-none focus:border-orange-500 text-sm md:text-lg w-full md:w-[500px]"
-            />
-          </div>
-
-          {/* Email */}
-          <div className="flex md:flex-row items-center gap-4 md:gap-8">
-            <label className="primary-text-color text-base md:text-2xl w-1/3 md:w-48">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
               onChange={handleInputChange}
               className="px-4 md:px-20 py-3 md:py-4 text-center rounded-full border-2 border-orange-400 bg-white focus:outline-none focus:border-orange-500 text-sm md:text-lg w-full md:w-[500px]"
             />
@@ -499,7 +480,6 @@ export default function SmoothFullpageScroll({ goToSection }) {
   const [currentSection, setCurrentSection] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   const touchStartY = useRef(0);
-
   const sections = [
     {
       id: 0,
@@ -596,35 +576,37 @@ export default function SmoothFullpageScroll({ goToSection }) {
   }, [goToSection, currentSection]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Sections */}
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={currentSection}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{
-            duration: 0.7,
-            ease: [0.43, 0.13, 0.23, 0.96],
-          }}
-          className={`absolute inset-0 flex justify-centers`}
-        >
-          {sections[currentSection].backgroundUrl && (
-            <img
-              key={currentSection + "-bg"}
-              src={sections[currentSection].backgroundUrl}
-              alt="Section Background"
-              className="absolute inset-0 w-full h-full 
+    <>
+      <div className="relative w-full h-screen overflow-hidden">
+        {/* Sections */}
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={currentSection}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{
+              duration: 0.7,
+              ease: [0.43, 0.13, 0.23, 0.96],
+            }}
+            className={`absolute inset-0 flex justify-centers`}
+          >
+            {sections[currentSection].backgroundUrl && (
+              <img
+                key={currentSection + "-bg"}
+                src={sections[currentSection].backgroundUrl}
+                alt="Section Background"
+                className="absolute inset-0 w-full h-full 
                                 object-contain object-bottom z-0"
-            />
-          )}
+              />
+            )}
 
-          <div className="absolute inset-0 z-10">
-            {sections[currentSection].component}
-          </div>
-        </motion.div>
-      </AnimatePresence>
-    </div>
+            <div className="absolute inset-0 z-10">
+              {sections[currentSection].component}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </>
   );
 }

@@ -15,21 +15,23 @@ const Header = ({ onLogout, onRegisterClick }) => {
   };
 
   const handleRegisterClick = () => {
-    navigate("/", { state: { scrollToSection: 5 } });
-    if (onRegisterClick) onRegisterClick();
+    navigate("/", { state: { scrollToSection: 4 } });
+    if (onRegisterClick) onRegisterClick(4);
+  };
+  const handleHomeClick = () => {
+    navigate("/", { state: { scrollToSection: 0 } });
+    if (onRegisterClick) onRegisterClick(0);
   };
 
   return (
     <header className="bg-[var(--color-background)] fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 md:px-8 py-4">
       {/* Logo */}
-      <div className="cursor-pointer ml-4 md:ml-8">
-        <Link to="/">
-          <img
-            src="/assets/students/Slide 2/Slide 2.1.png"
-            alt="logo"
-            className="w-24 md:w-50"
-          />
-        </Link>
+      <div className="cursor-pointer ml-4 md:ml-8" onClick={handleHomeClick}>
+        <img
+          src="/assets/students/Slide 2/Slide 2.1.png"
+          alt="logo"
+          className="w-24 md:w-50"
+        />
       </div>
 
       {/* Hamburger button (mobile only) */}

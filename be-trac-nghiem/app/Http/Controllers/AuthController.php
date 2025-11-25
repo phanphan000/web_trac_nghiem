@@ -16,7 +16,7 @@ class AuthController extends Controller
             'username' => 'required|string|unique:users,username',
             'password' => 'required|string|min:6',
             'full_name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'nullable|email|unique:users,email',
             'class_id' => 'nullable|integer',
             'avatar_url' => 'nullable|string',
             'role' => 'required|string|in:admin,teacher,student',

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306:3306
--- Thời gian đã tạo: Th10 20, 2025 lúc 05:26 AM
+-- Thời gian đã tạo: Th10 25, 2025 lúc 07:27 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -196,15 +196,6 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `roles`
---
-
-INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2025-11-19 21:18:44', '2025-11-19 21:18:44'),
-(2, 'teacher', '2025-11-19 21:18:44', '2025-11-19 21:18:44'),
-(3, 'student', '2025-11-19 21:18:44', '2025-11-19 21:18:44');
-
 -- --------------------------------------------------------
 
 --
@@ -218,14 +209,6 @@ CREATE TABLE `role_user` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `role_user`
---
-
-INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, NULL, NULL),
-(2, 2, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -363,7 +346,7 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `full_name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `class_id` bigint(20) UNSIGNED DEFAULT NULL,
   `avatar_url` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -375,8 +358,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `full_name`, `email`, `class_id`, `avatar_url`, `created_at`, `updated_at`) VALUES
-(1, 'hehe', '$2y$12$pp0De12VfJc9E4H2EHZymO/HMVmgFrqOtbu1vSMWNY2ciTx0JPo0q', 'phan văn hiếu', 'user@example.com', 3, NULL, '2025-11-19 21:25:00', '2025-11-19 21:25:00'),
-(2, 'teacher', '$2y$12$z9yVJVAa2WodvS4dB/3h9u0qDj3d7lc4mobvh6.jRwkdYlwr5Nlba', 'teacher', 'teacher@example.com', 3, NULL, '2025-11-19 21:25:49', '2025-11-19 21:25:49');
+(1, 'teacher', '$2y$12$OrVxVFNSuveZUxj8/mdfGukH7cWvzJL5pk9MnLSIAScQs797VP9Yy', 'teacher', NULL, 3, NULL, '2025-11-24 23:26:30', '2025-11-24 23:26:30');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -524,7 +506,8 @@ ALTER TABLE `topics`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_username_unique` (`username`);
+  ADD UNIQUE KEY `users_username_unique` (`username`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
@@ -564,13 +547,13 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
@@ -618,7 +601,7 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

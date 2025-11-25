@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import ArrowCursorProvider from "./components/ArrowCursorProvider";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
+import GuestOnlyRoute from "./components/GuestOnlyRoute";
 //import các layout
 import MainLayout from "./layouts/MainLayout";
 //import các trang
@@ -56,15 +57,22 @@ function App() {
           <Route
             element={
               <MainLayout
-                onRegisterClick={() => {
-                  setGoToSection(4);
+                onRegisterClick={(sectionId) => {
+                  setGoToSection(sectionId);
                   setTimeout(() => setGoToSection(null), 200);
                 }}
               />
             }
           >
             {/* Public routes */}
-            <Route path="/" element={<Home goToSection={goToSection} />} />
+            <Route
+              path="/"
+              element={
+                <GuestOnlyRoute>
+                  <Home goToSection={goToSection} />
+                </GuestOnlyRoute>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/teacher" element={<QuestionRatioSettings />} />
 

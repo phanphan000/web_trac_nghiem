@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('username', 50)->unique(); // username, VARCHAR(50), UNIQUE
             $table->string('password'); // password, VARCHAR(255) → bcrypt khi lưu
             $table->string('full_name', 100); // full_name, VARCHAR(100)
-            $table->string('email', 100); // email, VARCHAR(100)
+            $table->string('email', 100)->nullable()->unique();
             $table->unsignedBigInteger('class_id')->nullable(); // class_id, INT, FK → classes.id, NULLABLE
             $table->text('avatar_url')->nullable(); // avatar_url, TEXT, NULLABLE
             $table->timestamps(); // created_at & updated_at, DATETIME
