@@ -339,6 +339,10 @@ function Section5() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name === "class_id") {
+      // chỉ cho phép số nguyên dương
+      if (value && !/^\d+$/.test(value)) return;
+    }
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -358,6 +362,10 @@ function Section5() {
       setMessage("Mật khẩu phải có ít nhất 6 ký tự!");
       return;
     }
+    if (!/^\d+$/.test(formData.class_id)) {
+      setMessage("Lớp phải là số nguyên!");
+      return;
+    }
 
     try {
       const res = await register(formData); // gọi API
@@ -375,6 +383,7 @@ function Section5() {
           class_id: "",
         });
         setMessage("");
+        navigate("/login");
       }, 2000);
     } catch (err) {
       console.error(err);

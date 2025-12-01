@@ -289,18 +289,6 @@ export default function QuizApp() {
                             {String.fromCharCode(65 + i)}
                           </div>
                           <div className="flex-1">{opt}</div>
-                          {/* small badge when reveal */}
-                          {/* {reveal && (
-                            <div
-                              className={`px-3 py-1 rounded-full text-sm ${
-                                isCorrect
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-red-100 text-red-800"
-                              }`}
-                            >
-                              {isCorrect ? "Đúng" : "Sai"}
-                            </div>
-                          )} */}
                         </div>
                       </button>
                     );

@@ -18,7 +18,6 @@ const QuestionCountSettings = () => {
       .then((res) => res.json())
       .then(async (data) => {
         setSubjects(data);
-        // load topics cho từng môn
         const allTopics = {};
         for (let s of data) {
           const res = await fetch(`/api/subjects/${s.id}/topics`, {
@@ -36,27 +35,64 @@ const QuestionCountSettings = () => {
             total_questions: 0,
           }));
         }
+        // set dữ liệu
         setTopicsBySubject(allTopics);
+
+        // nếu đang ở combined thì khởi tạo luôn
+        if (mode === "combined") {
+          initCombined(allTopics);
+        }
       })
       .catch((err) => console.error(err));
   }, []);
+
+  // Hàm khởi tạo combined với tổng 30 câu random
+  const initCombined = (topicsData) => {
+    const updated = {};
+    // gom tất cả topic của tất cả môn
+    let allTopics = [];
+    for (let sid in topicsData) {
+      allTopics = allTopics.concat(topicsData[sid]);
+    }
+
+    const totalQuestions = 30;
+    const topicCount = allTopics.length;
+    const perTopic = Math.floor(totalQuestions / topicCount);
+    let remaining = totalQuestions % topicCount;
+
+    // random phân bổ số câu cho từng topic
+    const shuffled = [...allTopics].sort(() => Math.random() - 0.5);
+
+    shuffled.forEach((t, index) => {
+      let count = perTopic;
+      if (remaining > 0) {
+        count += 1;
+        remaining -= 1;
+      }
+      // chia đều easy/medium/hard
+      const easy = Math.floor(count / 3);
+      const hard = Math.floor(count / 3);
+      const medium = count - easy - hard;
+
+      // gán lại vào updated
+      if (!updated[t.subject_id]) updated[t.subject_id] = [];
+      updated[t.subject_id].push({
+        ...t,
+        easy_count: easy,
+        medium_count: medium,
+        hard_count: hard,
+        total_questions: count,
+      });
+    });
+
+    setTopicsBySubject(updated);
+  };
 
   // Khi click nav
   const handleModeChange = (newMode) => {
     setMode(newMode);
     if (newMode === "combined") {
-      // tất cả topic của tất cả môn = 1 câu mỗi độ khó
-      const updated = {};
-      for (let sid in topicsBySubject) {
-        updated[sid] = topicsBySubject[sid].map((t) => ({
-          ...t,
-          easy_count: 1,
-          medium_count: 1,
-          hard_count: 1,
-          total_questions: 3,
-        }));
-      }
-      setTopicsBySubject(updated);
+      initCombined(topicsBySubject);
     } else {
       setActiveSubject(null); // reset
     }
@@ -131,8 +167,8 @@ const QuestionCountSettings = () => {
     }
 
     const payload = {
-      subject_id: activeSubject,
-      title: "Đề kiểm tra",
+      subject_id: mode === "combined" ? null : activeSubject,
+      title: mode === "combined" ? "Đề tổng hợp" : "Đề kiểm tra",
       duration: 45,
       settings: settings.map((s) => ({
         ...s,

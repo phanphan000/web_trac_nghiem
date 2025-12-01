@@ -65,7 +65,13 @@ const Index = () => {
   }, [testId]);
 
   return (
-    <div className="min-h-screen flex flex-col justify-between items-center pt-35 bg-[var(--color-background)]">
+    <div
+      className={
+        hasDoneTest
+          ? "min-h-screen flex flex-col justify-between items-center pt-35 bg-[var(--color-background)]"
+          : "min-h-screen flex justify-center items-center bg-[var(--color-background)]"
+      }
+    >
       <img
         src="/assets/students/Slide 2/Slide 2.3.png"
         alt="Login Background"
@@ -155,7 +161,13 @@ const Index = () => {
           </div>
 
           {/* Phần Button Test */}
-          <div className="flex justify-center items-center">
+          <div
+            className={
+              hasDoneTest
+                ? "flex justify-center items-center mt-30"
+                : "flex justify-center items-center"
+            }
+          >
             <button
               onClick={() => navigate("/test/instructions")}
               className="w-3/5 bg-[var(--color-secondary)] text-white text-6xl px-10 py-5 rounded-full cursor-pointer transition-all transform hover:scale-105 shadow-lg"
