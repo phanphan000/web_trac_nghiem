@@ -152,6 +152,7 @@ class TestController extends Controller
 
         $score = 0;
         $answers = $request->answers ?? [];
+        $timeSpent = $request->time_spent ?? null;
 
         // Tìm record đã tạo khi bắt đầu test
         $result = TestResult::where('test_id', $test->id)
@@ -165,6 +166,7 @@ class TestController extends Controller
                 'user_id' => $userId,
                 'score' => 0,
                 'created_at' => now(), // thời điểm bắt đầu
+                'time_spent' => $timeSpent,
             ]);
         }
 
@@ -181,11 +183,14 @@ class TestController extends Controller
             ]);
         }
 
-        // Update điểm và thời điểm nộp
-        $result->update([
-            'score' => $score,
-            'submitted_at' => now(),
-        ]);
+        // Update điểm 
+        if ($score > $result->score) {
+            $result->update([
+                'score' => $score,
+                'submitted_at' => now(),
+                'time_spent' => $timeSpent,
+            ]);
+        }
 
         return response()->json($result->load('answers'), 201);
     }

@@ -22,27 +22,43 @@ class ResultController extends Controller
             ->get();
     }
 
+    // public function leaderboard($test_id)
+    // {
+    //     $results = TestResult::where('test_id', $test_id)
+    //         ->with('user')
+    //         ->orderByDesc('score')
+    //         // Nếu muốn ưu tiên ai làm nhanh hơn khi điểm bằng nhau:
+    //         ->orderByRaw('TIMESTAMPDIFF(SECOND, created_at, COALESCE(submitted_at, updated_at)) ASC')
+    //         ->take(5)
+    //         ->get();
+
+    //     // Tính duration_used cho FE hiển thị
+    //     return $results->map(function ($result) {
+    //         $created = Carbon::parse($result->created_at);
+    //         $submittedOrUpdated = $result->submitted_at
+    //             ? Carbon::parse($result->submitted_at)
+    //             : Carbon::parse($result->updated_at);
+
+    //         $result->duration_used = $submittedOrUpdated->diffInSeconds($created);
+    //         return $result;
+    //     });
+    // }
+
+
     public function leaderboard($test_id)
     {
         $results = TestResult::where('test_id', $test_id)
             ->with('user')
-            ->orderByDesc('score')
-            // Nếu muốn ưu tiên ai làm nhanh hơn khi điểm bằng nhau:
-            ->orderByRaw('TIMESTAMPDIFF(SECOND, created_at, COALESCE(submitted_at, updated_at)) ASC')
+            ->orderByDesc('score')          // Ưu tiên điểm cao
+            ->orderBy('time_spent', 'asc')  // Nếu bằng điểm thì ai làm nhanh hơn đứng trên
             ->take(5)
             ->get();
 
-        // Tính duration_used cho FE hiển thị
+        // Trả về thêm field duration_used cho FE hiển thị (chính là time_spent)
         return $results->map(function ($result) {
-            $created = Carbon::parse($result->created_at);
-            $submittedOrUpdated = $result->submitted_at
-                ? Carbon::parse($result->submitted_at)
-                : Carbon::parse($result->updated_at);
-
-            $result->duration_used = $submittedOrUpdated->diffInSeconds($created);
+            $result->duration_used = $result->time_spent; // đã lưu sẵn trong DB
             return $result;
         });
     }
-
 
 }

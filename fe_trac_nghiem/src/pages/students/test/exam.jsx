@@ -92,8 +92,10 @@ export default function QuizApp() {
       setShowIncompleteWarning(true);
       return; // dừng lại, chờ user chọn nút
     }
+
     console.log("Cấu trúc questions:", questions);
     clearInterval(timerRef.current);
+
     // Chuẩn bị payload gửi lên backend
     const res = await fetch("/api/tests/latest"); // test_id mới nhất
     const data = await res.json();
@@ -106,11 +108,22 @@ export default function QuizApp() {
         selected_answer:
           finalAnswers[i] !== null ? letters[finalAnswers[i]] : null, // đáp án học sinh chọn (A/B/C/D)
       })),
+      time_spent: duration * 60 - timeLeft, // số giây đã làm bài
     };
     console.log("Payload gửi lên BE:", payload);
-    // Lưu id của test
+
+    // 👉 Tính điểm hiện tại ở frontend
+    let currentScore = 0;
+    questions.forEach((q, i) => {
+      const selected =
+        finalAnswers[i] !== null ? letters[finalAnswers[i]] : null;
+      if (selected && selected === q.correct) {
+        currentScore++;
+      }
+    });
+
     const testId = data.test.id; // hoặc data.id nếu format khác
-    // setTestId(testId);
+
     try {
       const res = await fetch(`/api/tests/${testId}/submit`, {
         method: "POST",
@@ -121,11 +134,14 @@ export default function QuizApp() {
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      console.log("Kết quả từ backend:", data);
+      const submitData = await res.json();
+      console.log("Kết quả từ backend:", submitData);
 
-      // Backend trả về score đã tính
-      setScore(data.score);
+      // 👉 Hiển thị điểm lần này (currentScore)
+      setScore(currentScore);
+
+      // Nếu muốn lưu cả điểm cao nhất để hiển thị thêm:
+      // setBestScore(submitData.score);
     } catch (err) {
       console.error("Error submitting quiz:", err);
     }
@@ -174,7 +190,7 @@ export default function QuizApp() {
 
   if (score !== null) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-30 bg-[var(--color-blackground)] primary-text-color">
+      <div className="min-h-screen flex items-center justify-center p-4 sm:p-10 lg:p-30 bg-[var(--color-blackground)] primary-text-color">
         <img
           src="/assets/students/Slide 2/Slide 2.3.png"
           alt="Login Background"
@@ -182,29 +198,29 @@ export default function QuizApp() {
         />
         <img
           src="/assets/students/Slide 15/38.png"
-          className="absolute bottom-0 -right-15 w-2/7 object-contain object-bottom z-30  "
+          className="absolute bottom-0 -right-15 w-2/7 object-contain object-bottom z-30 "
         />
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-xl w-full text-center z-10">
-          <h1 className="text-3xl font-extrabold">Kết quả</h1>
-          <p className="mt-4 text-lg">
-            Bạn trả lời đúng <span className="font-semibold">{score}</span> trên{" "}
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-md sm:max-w-xl w-full text-center z-10">
+          <h1 className="text-2xl sm:text-3xl font-extrabold">Kết quả</h1>
+          <p className="mt-4 text-base sm:text-lg">
+            Bạn trả lời đúng <span className="font-semibold">{score}</span> trên
             <span className="font-semibold">{questions.length}</span>
           </p>
-          <div className="mt-6 grid grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button
               onClick={restart}
-              className="py-3 rounded-xl shadow-md border hover:scale-[1.01] transition"
+              className="py-2 sm:py-3 rounded-xl shadow-md border hover:scale-[1.01] transition"
             >
               Làm lại
             </button>
             <button
               onClick={() => navigate("/test")}
-              className="py-3 rounded-xl shadow-md border bg-yellow-100 hover:brightness-95 transition"
+              className="py-2 sm:py-3 rounded-xl shadow-md border bg-yellow-100 hover:brightness-95 transition"
             >
               Thoát
             </button>
           </div>
-          <div className="mt-6 text-sm text-gray-600">
+          <div className="mt-6 text-xs sm:text-sm text-gray-600">
             Thời gian còn lại khi nộp: {formatTime(timeLeft)}
           </div>
         </div>
@@ -216,7 +232,7 @@ export default function QuizApp() {
   const progress = Math.round((index / questions.length) * 100);
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-30 bg-[var(--color-blackground)] primary-text-color mr-10">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-10 lg:p-30 bg-[var(--color-blackground)] primary-text-color">
       <img
         src="/assets/students/Slide 2/Slide 2.3.png"
         alt="Login Background"
@@ -224,52 +240,53 @@ export default function QuizApp() {
       />
       <img
         src="/assets/students/Slide 15/38.png"
-        className="absolute bottom-0 -right-15 w-2/7 object-contain object-bottom z-30 "
+        className="absolute bottom-0 -right-15 w-2/7 object-contain object-bottom z-10 "
       />
-      <div className="w-full max-w-4xl z-10">
-        <header className="flex items-center justify-between mb-4">
+      <div className="w-full max-w-2xl sm:max-w-4xl z-10">
+        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2 sm:gap-0">
           <div>
-            <h2 className="text-2xl font-bold">Bài kiểm tra vui</h2>
-            <p className="text-sm text-gray-600">
+            <h2 className="text-lg sm:text-2xl font-bold">Bài kiểm tra vui</h2>
+            <p className="text-xs sm:text-sm text-gray-600">
               Dành cho học sinh tiểu học — Hãy chọn đáp án đúng.
             </p>
           </div>
-          <div className="text-right">
-            <div className="text-sm">
+          <div className="text-left sm:text-right">
+            <div className="text-xs sm:text-sm">
               Câu {index + 1} / {questions.length}
             </div>
             <div className="text-xs mt-1">
-              Thời gian còn lại:{" "}
+              Thời gian còn lại:
               <span className="font-semibold">{formatTime(timeLeft)}</span>
             </div>
           </div>
         </header>
 
-        <div className="bg-white rounded-3xl p-6 shadow-lg">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg">
           {/* Progress bar */}
-          <div className="w-full bg-gray-200 rounded-full h-3 mb-4 overflow-hidden">
+          <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3 mb-4 overflow-hidden">
             <div
-              className="h-3 rounded-full"
+              className="h-2 sm:h-3 rounded-full"
               style={{
                 width: `${progress}%`,
                 background: "linear-gradient(90deg,#60a5fa,#fbbf24)",
               }}
             />
           </div>
-
           {/* Question card */}
-          <div className="flex gap-4 items-start">
+          <div className="flex flex-col md:flex-row gap-4 items-start">
             <div className="flex-1">
-              <div className="rounded-xl p-4 border border-dashed border-gray-100 bg-gradient-to-br from-white to-blue-50">
-                <div className="text-lg font-semibold mb-2">{q.title}</div>
+              <div className="rounded-xl p-3 sm:p-4 border border-dashed border-gray-100 bg-gradient-to-br from-white to-blue-50">
+                <div className="text-sm sm:text-lg font-semibold mb-2">
+                  {q.title}
+                </div>
                 {q.image && (
                   <img
                     src={q.image}
                     alt="question"
-                    className="w-full max-h-40 object-contain rounded-md my-2"
+                    className="w-full max-h-32 sm:max-h-40 object-contain rounded-md my-2"
                   />
                 )}
-                <div className="mt-2 grid gap-3">
+                <div className="mt-2 grid gap-2 sm:gap-3">
                   {(q?.options || []).map((opt, i) => {
                     const isSelected = selected === i || answers[index] === i;
                     const isCorrect = q.correct === i;
@@ -279,16 +296,18 @@ export default function QuizApp() {
                         key={i}
                         onClick={() => handleSelect(i)}
                         disabled={showAnswer}
-                        className={`w-full text-left p-4 rounded-xl shadow-sm border transition transform focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-300 hover:scale-103 ${
+                        className={`w-full text-left p-2 sm:p-4 rounded-xl shadow-sm border transition transform focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-300 hover:scale-103 ${
                           isSelected ? "bg-gray-300 scale-[1.01]" : "bg-white"
                         }`}
                         aria-pressed={isSelected}
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold bg-white border">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold bg-white border">
                             {String.fromCharCode(65 + i)}
                           </div>
-                          <div className="flex-1">{opt}</div>
+                          <div className="flex-1 text-sm sm:text-base">
+                            {opt}
+                          </div>
                         </div>
                       </button>
                     );
@@ -297,20 +316,20 @@ export default function QuizApp() {
               </div>
 
               {/* Controls */}
-              <div className="mt-4 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+              <div className="lg:mt-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-0">
+                <div className="hidden lg:flex items-center gap-2 text-xs sm:text-sm text-gray-600 lg:mr-auto">
                   <div className="px-2 py-1 rounded bg-white shadow-sm">
                     Mẹo: Dùng phím 1-4
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 lg:mr-auto">
                   <button
                     onClick={() => {
                       if (index > 0) setIndex(index - 1);
                     }}
                     disabled={index === 0}
-                    className="px-4 py-2 rounded-xl border shadow-lg"
+                    className="px-3 sm:px-4 py-2 rounded-xl border shadow-lg text-sm sm:text-base"
                   >
                     Quay lại
                   </button>
@@ -319,15 +338,21 @@ export default function QuizApp() {
                       if (index < questions.length - 1) setIndex(index + 1);
                       else finishQuiz();
                     }}
-                    className="px-4 py-2 rounded-xl bg-yellow-100 border shadow-lg hover:bg-yellow-200 transition"
+                    className="px-3 sm:px-4 py-2 rounded-xl bg-yellow-100 border shadow-lg hover:bg-yellow-200 transition text-sm sm:text-base"
                   >
                     Tiếp tục
+                  </button>
+                  <button
+                    onClick={() => finishQuiz()}
+                    className="md:hidden px-3 sm:px-4 py-2 rounded-xl bg-red-100 border shadow-lg hover:bg-red-200 transition text-sm sm:text-base"
+                  >
+                    Nộp bài
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Sidebar: small summary */}
+            {/* Sidebar chỉ hiện từ md trở lên */}
             <aside className="w-40 hidden md:flex flex-col h-full">
               <div className="bg-gradient-to-b from-white to-indigo-50 p-4 rounded-xl shadow-inner text-center">
                 <div className="text-sm">Tiến trình</div>
@@ -348,8 +373,7 @@ export default function QuizApp() {
                   ))}
                 </div>
               </div>
-
-              <div className="p-4 z-1000">
+              <div className="p-4 z-50">
                 <button
                   onClick={() => finishQuiz()}
                   className="w-full px-4 py-2 rounded-xl bg-red-100 border shadow-lg hover:bg-red-200 transition"
@@ -359,7 +383,6 @@ export default function QuizApp() {
               </div>
             </aside>
           </div>
-
           {/* Div cảnh báo */}
           {showIncompleteWarning && (
             <div className="fixed inset-0 bg-opacity-40 flex items-center justify-center z-50">

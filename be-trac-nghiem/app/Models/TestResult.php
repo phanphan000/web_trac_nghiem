@@ -9,7 +9,7 @@ class TestResult extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['test_id', 'user_id', 'score', 'submitted_at'];
+    protected $fillable = ['test_id', 'user_id', 'score', 'time_spent', 'submitted_at'];
 
     public function test()
     {

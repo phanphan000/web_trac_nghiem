@@ -33,35 +33,39 @@ export default function LearningMethods() {
 
   if (!subject) {
     return (
-      <div className="text-center text-red-500 text-2xl">
+      <div className="text-center text-red-500 text-xl sm:text-2xl">
         Lỗi lấy method trong môn học!!!
       </div>
     );
   }
+
   return (
-    <div className="flex flex-col items-center  p-8 min-h-screen pt-22">
-      <div className="w-full overflow-hidden flex justify-center">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 lg:p-10">
+      {/* Ảnh đầu */}
+      <div className="w-full flex justify-center mb-6 sm:mb-10">
         <img
           src={subject.img1}
           alt="ảnh slide 17"
-          className="object-contain w-[70%]"
+          className="object-contain w-3/4 sm:w-2/3 lg:w-1/2"
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+      {/* Grid các method */}
+      <div className="grid grid-cols-3 md:grid-cols-3 gap-0 lg:gap-12 w-full max-w-6xl">
         {[subject.img2, subject.img3, subject.img4].map((img, index) => (
           <div
             key={method[index]}
-            className="flex flex-col items-center gap-10 mb-5 mx-5"
+            className="flex flex-col items-center gap-6 sm:gap-8 lg:gap-10 mb-6 sm:mb-8 lg:mb-10 mx-2 sm:mx-4"
           >
             <img
               src={img}
               alt={`${subject.id}-${method[index]}`}
-              className="w-90 object-contain hover:scale-105 transition-transform duration-200"
+              className="w-40 sm:w-56 lg:w-72 object-contain hover:scale-105 transition-transform duration-200"
             />
             <OrangeButton
               text={method[index]}
               link={`/subjects/${subject.id}/${method[index].toLowerCase()}`}
-            />{" "}
+            />
           </div>
         ))}
       </div>

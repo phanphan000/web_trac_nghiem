@@ -63,13 +63,16 @@ const Index = () => {
 
     fetchData();
   }, [testId]);
+  function formatTime(seconds) {
+    return `${seconds}s`;
+  }
 
   return (
     <div
       className={
         hasDoneTest
-          ? "min-h-screen flex flex-col justify-between items-center pt-35 bg-[var(--color-background)]"
-          : "min-h-screen flex justify-center items-center bg-[var(--color-background)]"
+          ? "min-h-screen flex flex-col lg:flex-row justify-center items-center bg-[var(--color-background)]"
+          : "min-h-screen flex flex-col lg:flex-row justify-center items-center bg-[var(--color-background)]"
       }
     >
       <img
@@ -78,24 +81,27 @@ const Index = () => {
         className="absolute inset-0 w-full h-full object-contain object-bottom z-0"
       />
 
-      <div className="w-full max-w-7xl mx-auto z-10 px-8">
-        <div className="grid grid-cols-2 gap-8 items-start">
-          {/* Phần Welcome Text */}
-          <div className="flex flex-col justify-center items-center">
-            <h1 className="text-5xl primary-text-color text-center leading-normal">
-              WELCOME TO <br />
-              BRAINY LAND
-            </h1>
-            <p className="text-xl primary-text-color text-center mt-5">
-              Một sân chơi toàn diện cho Math, Science, Tin học
-              <br />
-              Dành riêng cho Học Sinh Ngôi Sao Hoàng Mai
-            </p>
+      <div className="w-full max-w-7xl mx-auto z-10 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 items-center">
+          {/* Welcome Text */}
+          <div className="flex flex-col justify-center items-center text-center px-4">
+            {!hasDoneTest && (
+              <>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl primary-text-color leading-normal">
+                  WELCOME TO <br />
+                  BRAINY LAND
+                </h1>
+                <p className="text-base sm:text-lg lg:text-xl primary-text-color mt-5">
+                  Một sân chơi toàn diện cho Math, Science, Tin học
+                  <br />
+                  Dành riêng cho Học Sinh Ngôi Sao Hoàng Mai
+                </p>
+              </>
+            )}
 
-            {/* Chỉ hiển thị bảng xếp hạng nếu user đã từng làm test */}
             {hasDoneTest && (
-              <div className="mt-6 w-full max-w-xl bg-amber-50 rounded-2xl shadow-xl p-6 border-4 border-amber-200">
-                <h2 className="text-3xl font-bold text-center text-amber-800 mb-4">
+              <div className="mt-6 w-full max-w-md sm:max-w-xl bg-amber-50 rounded-2xl shadow-xl p-4 sm:p-6 border-4 border-amber-200">
+                <h2 className="text-lg sm:text-3xl font-bold text-center text-amber-800 mb-4">
                   🏆 TOP 5 BẢNG XẾP HẠNG 🏆
                 </h2>
 
@@ -148,7 +154,7 @@ const Index = () => {
                               Thời gian
                             </div>
                             <div className="text-xl font-bold text-blue-700">
-                              {entry.duration_used}s
+                              {formatTime(entry.time_spent)}
                             </div>
                           </div>
                         </div>
@@ -160,17 +166,11 @@ const Index = () => {
             )}
           </div>
 
-          {/* Phần Button Test */}
-          <div
-            className={
-              hasDoneTest
-                ? "flex justify-center items-center mt-30"
-                : "flex justify-center items-center"
-            }
-          >
+          {/* Button Test */}
+          <div className="flex justify-center items-center">
             <button
               onClick={() => navigate("/test/instructions")}
-              className="w-3/5 bg-[var(--color-secondary)] text-white text-6xl px-10 py-5 rounded-full cursor-pointer transition-all transform hover:scale-105 shadow-lg"
+              className="w-3/4 sm:w-2/3 lg:w-3/5 bg-[var(--color-secondary)] text-white text-3xl sm:text-4xl lg:text-6xl px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full cursor-pointer transition-all transform hover:scale-105 shadow-lg"
             >
               TEST
             </button>

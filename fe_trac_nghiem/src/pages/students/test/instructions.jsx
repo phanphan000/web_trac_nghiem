@@ -12,62 +12,72 @@ export default function Instructions() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-full mx-10 flex justify-between pt-35 primary-text-color items-center">
+    <div className="flex items-center justify-center h-screen primary-text-color">
       <img
         src="/assets/students/Slide 2/Slide 2.3.png"
         alt="Login Background"
         className="absolute inset-0 w-full h-full object-contain object-bottom z-0"
       />
+
       <div
-        className="scale-[0.95] w-full max-w-4xl mx-auto z-10 relative bg-cover bg-center bg-no-repeat flex flex-col justify-center pt-30 pb-40 px-30"
+        className="scale-90 sm:scale-[0.95] w-full max-w-full sm:max-w-3xl lg:max-w-4xl z-10 bg-cover bg-center bg-no-repeat pt-10 sm:pt-24 lg:pt-30 pb-5 sm:pb-18 lg:pb-40 sm:px-10 lg:px-30"
         style={{ backgroundImage: 'url("/assets/students/Slide 14/34.png")' }}
       >
-        {/* Phần nội dung */}
-        <div className="flex flex-col items-start gap-6 relative ml-10">
-          <div className="flex items-center gap-2">
-            <Target size={32} color="blue" />
-            <h1 className="text-2xl font-bold">
-              THỬ THÁCH 3 TRONG 1 ĐANG ĐỢI BẠN
-            </h1>
-          </div>
+        {/* Nội dung */}
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-start gap-4 sm:gap-6 relative ml-4 sm:ml-6 lg:ml-10">
+            <div className="flex items-center gap-2">
+              <Target size={28} className="sm:w-8 sm:h-8" color="blue" />
+              <h1 className="text-md sm:text-xl lg:text-2xl font-bold">
+                THỬ THÁCH 3 TRONG 1 ĐANG ĐỢI BẠN
+              </h1>
+            </div>
 
-          <ul className="list-none text-xl space-y-2 ml-6">
-            <li className="flex items-center gap-2">
-              <Zap size={24} color="orange" />
-              <span>Toán học nhanh như chớp</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <FlaskConical size={24} color="green" />
-              <span>Khoa học siêu khám phá</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Laptop2 size={24} color="blue" />
-              <span>Tin học thông minh</span>
-            </li>
-          </ul>
+            <ul className="list-none text-base sm:text-lg lg:text-xl space-y-2 ml-4 sm:ml-6">
+              <li className="flex items-center gap-2">
+                <Zap size={20} className="sm:w-6 sm:h-6" color="orange" />
+                <span>Toán học nhanh như chớp</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <FlaskConical
+                  size={20}
+                  className="sm:w-6 sm:h-6"
+                  color="green"
+                />
+                <span>Khoa học siêu khám phá</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Laptop2 size={20} className="sm:w-6 sm:h-6" color="blue" />
+                <span>Tin học thông minh</span>
+              </li>
+            </ul>
 
-          <div className="flex items-center gap-2">
-            <Clock size={24} color="blue" />
-            <h1 className="text-2xl">Bạn có 30 phút để hoàn thành tất cả!</h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <Rocket size={24} color="red" />{" "}
-            <h1 className="text-2xl">
-              Bấm nút bên dưới để bắt đầu trò chơi
-              <br />
-              trí thức ngay thôi!
-            </h1>
+            <div className="flex items-center gap-2">
+              <Clock size={20} className="sm:w-6 sm:h-6" color="blue" />
+              <h1 className="text-base sm:text-lg lg:text-2xl">
+                Bạn có 30 phút để hoàn thành tất cả!
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Rocket size={20} className="sm:w-6 sm:h-6" color="red" />
+              <h1 className="text-base sm:text-lg lg:text-2xl">
+                Bấm nút bên dưới để bắt đầu trò chơi
+                <br />
+                trí thức ngay thôi!
+              </h1>
+            </div>
           </div>
         </div>
 
         {/* Nút START */}
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-8 lg:mt-0">
           <button
             onClick={() => navigate("/test/exam")}
-            className="border border-black group flex items-center justify-center gap-2 text-xl bg-yellow-500 rounded-full px-8 py-4 hover:bg-yellow-300 transition-colors absolute bottom-10"
+            className="border border-black group flex items-center justify-center gap-2 text-base sm:text-lg lg:text-xl bg-yellow-500 rounded-full px-6 sm:px-8 py-3 sm:py-4 hover:bg-yellow-300 transition-colors lg:absolute lg:bottom-10"
           >
             <span className="text-blue-900 font-bold">START</span>
-            <MousePointerClick className="w-6 h-6 text-blue-900 transform transition-transform duration-300 group-hover:scale-125 group-hover:-rotate-12" />
+            <MousePointerClick className="w-5 h-5 sm:w-6 sm:h-6 text-blue-900 transform transition-transform duration-300 group-hover:scale-125 group-hover:-rotate-12" />
           </button>
         </div>
       </div>
