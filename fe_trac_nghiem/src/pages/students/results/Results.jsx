@@ -41,18 +41,18 @@ export default function Results() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center pt-30">
-      <h1 className="text-5xl font-bold text-center primary-text-color mb-10">
+    <div className="w-full flex flex-col items-center justify-center h-screen ml-3 md:ml-10 lg:ml-20">
+      <h1 className="text-3xl md:text-5xl font-bold text-center primary-text-color mb-4 md:mb-7">
         Kết quả học tập
       </h1>
 
       {/* Thanh chọn môn */}
-      <div className="flex gap-6 mb-10">
+      <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-4 md:mb-7">
         {Object.keys(subjects).map((key) => (
           <div
             key={key}
             onClick={() => setSelectedSubject(key)}
-            className={`px-6 py-3 rounded-lg font-semibold text-lg cursor-pointer transition-all duration-200 ${
+            className={`px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold text-base md:text-lg cursor-pointer transition-all duration-200 ${
               selectedSubject === key
                 ? "bg-[var(--color-secondary)] text-white scale-105"
                 : "bg-gray-200 primary-text-color hover:bg-gray-300"
@@ -64,7 +64,7 @@ export default function Results() {
       </div>
 
       {/* Hiển thị kết quả môn đã chọn */}
-      <div className="w-full  px-4">
+      <div className="w-full">
         <ProgressBar data={subjects[selectedSubject].data} />
       </div>
     </div>

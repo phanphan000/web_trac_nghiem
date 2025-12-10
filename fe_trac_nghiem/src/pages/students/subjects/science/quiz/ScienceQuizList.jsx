@@ -37,24 +37,26 @@ export default function MathQuizList() {
   ];
 
   return (
-    <div className="flex flex-col items-center pt-30">
+    <div className="min-h-screen flex flex-col items-center justify-center">
       {/* Header */}
-      <div className="inline-flex items-center justify-center">
+      <div className="w-full flex justify-center mt-6 md:mt-0">
         <img
           src="/assets/students/Slide 35/105.png"
-          alt="Infor Game Time"
-          className="object-contain h-35"
+          alt="Math Game Time"
+          className="object-contain h-20 md:h-32"
         />
       </div>
-      <div className="flex flex-wrap justify-between max-w-7xl mx-auto gap-y-8 mt-15">
+
+      {/* Grid responsive */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10  max-w-7xl mx-auto mt-3 md:mt-10">
         {lists.map((list, index) => (
           <div
             key={index}
             onClick={() => navigate(`/subjects/science/quiz/${list.id}`)}
-            className="w-[30%] min-w-[200px] group flex flex-col items-center gap-3 mb-5 transition duration-300 ease-in-out hover:scale-105"
+            className="group flex flex-col items-center gap-3 transition duration-300 ease-in-out hover:scale-105 cursor-pointer lg:mx-10"
           >
             {/* Icon/Image */}
-            <div className="w-45 h-32 flex items-center justify-center">
+            <div className="w-28 h-24 md:w-40 md:h-32 flex items-center justify-center">
               <img
                 src={list.img}
                 alt={list.text}
@@ -64,7 +66,7 @@ export default function MathQuizList() {
 
             {/* Text */}
             <div className="text-center">
-              <p className="text-lg font-bold primary-text-color mb-1">
+              <p className="text-sm md:text-lg font-bold primary-text-color mb-1">
                 {list.text}
               </p>
             </div>

@@ -64,47 +64,45 @@ export default function TopicInforGameDetail() {
     },
   ];
   return (
-    <>
-      <div className="relative w-screen h-screen overflow-hidden pt-25">
-        {/* Header với MATH GAME TIME */}
-        <div className="w-full flex justify-center">
-          <img
-            src="/assets/students/Slide 45/145.png"
-            alt="Math Game Time"
-            className="object-contain h-35"
-          />
-        </div>
-
-        {/* Grid 2 hàng x 5 cột */}
-        <div className="grid grid-cols-5 gap-8 max-w-7xl mx-auto mt-10">
-          {listgames.map((game, index) => (
-            <a
-              key={index}
-              href={game.link}
-              className="group flex flex-col items-center gap-3 transition duration-300 ease-in-out hover:scale-105"
-            >
-              {/* Icon/Image */}
-              <div className="w-40 h-32 flex items-center justify-center">
-                <img
-                  src={game.img}
-                  alt={game.text2}
-                  className="w-full h-full object-contain transition duration-300 group-hover:scale-110"
-                />
-              </div>
-
-              {/* Text */}
-              <div className="text-center mx-2">
-                <p className="text-lg font-bold primary-text-color mb-1">
-                  {game.text1}
-                </p>
-                <p className="text-base font-semibold primary-text-color">
-                  {game.text2}
-                </p>
-              </div>
-            </a>
-          ))}
-        </div>
+    <div className="relative w-screen h-screen md:flex md:flex-col md:justify-center md:items-center mt-20 md:mt-0">
+      {/* Header với Infor GAME TIME */}
+      <div className="w-full flex justify-center">
+        <img
+          src="/assets/students/Slide 45/145.png"
+          alt="Math Game Time"
+          className="object-contain h-20 md:h-35"
+        />
       </div>
-    </>
+
+      {/* Grid responsive */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8 max-w-7xl mx-auto md:mt-10">
+        {listgames.map((game, index) => (
+          <a
+            key={index}
+            href={game.link}
+            className="group flex flex-col items-center gap-2 md:gap-3 transition duration-300 ease-in-out hover:scale-105"
+          >
+            {/* Icon/Image */}
+            <div className="w-28 h-24 md:w-40 md:h-32 flex items-center justify-center">
+              <img
+                src={game.img}
+                alt={game.text2}
+                className="w-full h-full object-contain transition duration-300 group-hover:scale-110"
+              />
+            </div>
+
+            {/* Text */}
+            <div className="text-center">
+              <p className="text-sm md:text-lg font-bold primary-text-color mb-1">
+                {game.text1}
+              </p>
+              <p className="text-xs md:text-base font-semibold primary-text-color">
+                {game.text2}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
   );
 }

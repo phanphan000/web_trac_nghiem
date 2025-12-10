@@ -170,42 +170,47 @@ export default function TopicList() {
     );
   }
   return (
-    <div className="min-h-screen flex flex-col items-center pt-30 bg-gradient-to-b from-orange-50 to-orange-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-orange-100 px-4 md:px-0 mt-12 md:mt-0">
       {/* Header */}
-      <div className="inline-flex items-center justify-center">
+      <div className="inline-flex items-center justify-center mb-3 md:mb-0">
         <img
           src="/assets/students/Slide 35/105.png"
           alt="Infor Game Time"
-          className="object-contain h-30"
+          className="object-contain h-20 md:h-30"
         />
       </div>
 
-      <div className="flex w-full px-8 mt-15">
+      {/* Nội dung */}
+      <div className="flex flex-col md:flex-row items-center w-full md:mt-5 gap-10 md:gap-0">
         {/* Bên trái: ảnh chiếm 3/7 */}
-        <div className="w-3/7 flex flex-col items-center">
-          <img src={topic.img} alt={topic.text} className="scale-75" />
-          <p className="text-center text-3xl primary-text-color mx-10">
+        <div className="md:w-3/7 flex flex-col items-center justify-center">
+          <img
+            src={topic.img}
+            alt={topic.text}
+            className="w-40 md:w-auto scale-90 md:scale-75"
+          />
+          <p className="text-center text-2xl md:text-3xl primary-text-color mx-4 md:mx-10 mt-4 md:mt-0">
             {topic.text}
           </p>
         </div>
 
-        {/* Bên phải: 4 phần tử chia 2 hàng */}
+        {/* Bên phải: card */}
         <div
-          className={`w-4/7 ${
+          className={`md:w-4/7 ${
             topic.cards.length === 2
-              ? "flex flex-row justify-center gap-10 items-center"
-              : "grid grid-cols-2 gap-8 justify-items-center"
-          } mx-20`}
+              ? "flex flex-row justify-center gap-6 md:gap-10 items-center"
+              : "grid grid-cols-2 gap-6 lg:gap-8 justify-items-center"
+          } mx-0 md:mx-10 lg:mx-20`}
         >
           {topic.cards.map((card, index) => (
-            <div className="text-sm scale-90 max-w-[300px]">
+            <div className="text-xs md:text-sm scale-95 md:scale-90 max-w-[160px] md:max-w-[300px]">
               <ValueCard
                 key={`${id}-${index}`}
                 img={card.img}
                 text={card.text}
                 link={card.link}
                 navigate={navigate}
-                className="w-45 h-25"
+                className="w-32 h-20 md:w-45 md:h-25"
               />
             </div>
           ))}

@@ -122,27 +122,32 @@ export default function TopicList() {
     );
   }
   return (
-    <div className="min-h-screen flex flex-col items-center pt-25 bg-gradient-to-b from-orange-50 to-orange-100">
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-orange-100 px-10 md:px-0 lg:px-4 md:pr-8 lg:pr-0 mt-6 md:mt-0 ">
       {/* Header */}
       <div className="w-full flex justify-center">
         <img
           src="/assets/students/Slide 29/80.png"
           alt="Math Game Time"
-          className="object-contain h-35"
+          className="object-contain h-20 md:h-35"
         />
       </div>
 
-      <div className="flex w-full px-8 mt-15">
-        {/* Bên trái: ảnh chiếm 3/7 */}
-        <div className="w-3/7 flex flex-col items-center">
-          <img src={topic.img} alt={topic.text} className="scale-80" />
-          <p className="text-center text-4xl primary-text-color">
+      {/* Nội dung */}
+      <div className="flex flex-col md:flex-row w-full md:mt-5 gap-5 md:gap-0">
+        {/* Bên trái: ảnh */}
+        <div className="md:w-3/7 flex flex-col items-center justify-center">
+          <img
+            src={topic.img}
+            alt={topic.text}
+            className="w-40 md:w-auto scale-90 md:scale-80"
+          />
+          <p className="text-center text-2xl md:text-4xl primary-text-color mt-0">
             {topic.text}
           </p>
         </div>
 
-        {/* Bên phải: 4 phần tử chia 2 hàng */}
-        <div className="w-4/7 grid grid-cols-2 gap-8 justify-items-center mx-25">
+        {/* Bên phải: grid card */}
+        <div className="md:w-4/7 grid grid-cols-2 gap-6 md:gap-8 justify-items-center lg:mx-25">
           {cards.map((i) => (
             <ValueCard
               key={`${id}-${i}`}
