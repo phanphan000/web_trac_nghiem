@@ -52,7 +52,7 @@ export default function MathQuizList() {
         {lists.map((list, index) => (
           <div
             key={index}
-            onClick={() => navigate(`/subjects/infor/quiz/${list.id}`)}
+            onClick={() => navigate(`/subjects/informatics/quiz/${list.id}`)}
             className="group flex flex-col items-center gap-3 transition duration-300 ease-in-out hover:scale-105 cursor-pointer lg:mx-10"
           >
             {/* Icon/Image */}

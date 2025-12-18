@@ -30,16 +30,19 @@ import TopicMathMusicDetail from "./pages/students/subjects/math/music/TopicMath
 import TopicMathGameDetail from "./pages/students/subjects/math/game/TopicMathGameDetail";
 import MathQuizList from "./pages/students/subjects/math/quiz/QuizList";
 import MathQuizDetail from "./pages/students/subjects/math/quiz/MathQuizDetail";
+import MathQuizGenerate from "./pages/students/subjects/math/quiz/MathQuizGenerate";
 // import các trang học sinh-->subjects-->tin
 import TopicInforMusicDetail from "./pages/students/subjects/informatics/music/TopicInforMusicDetail";
 import TopicInforGameDetail from "./pages/students/subjects/informatics/game/TopicInforGameDetail";
 import InforQuizList from "./pages/students/subjects/informatics/quiz/InforQuizList";
 import InforQuizDetail from "./pages/students/subjects/informatics/quiz/InforQuizDetail";
+import InforQuizGenerate from "./pages/students/subjects/informatics/quiz/InforQuizGenerate";
 //import các trang học sinh-->subjects-->khoa học
 import TopicScienceMusicDetail from "./pages/students/subjects/science/music/TopicScienceMusicDetail";
 import TopicScienceGameDetail from "./pages/students/subjects/science/game/TopicScienceGameDetail";
 import ScienceQuizList from "./pages/students/subjects/science/quiz/ScienceQuizList";
 import ScienceQuizDetail from "./pages/students/subjects/science/quiz/ScienceQuizDetail";
+import ScienceQuizGenerate from "./pages/students/subjects/science/quiz/ScienceQuizGenerate";
 // import các trang teacher
 import QuestionRatioSettings from "./pages/teacher/QuestionRatioSettings";
 function App() {
@@ -108,6 +111,10 @@ function App() {
                 path="/subjects/math/quiz/:id"
                 element={<MathQuizDetail />}
               />
+              <Route
+                path="/subjects/math/quiz/:id/generate"
+                element={<MathQuizGenerate />}
+              />
 
               <Route
                 path="/subjects/informatics/music"
@@ -125,6 +132,10 @@ function App() {
                 path="/subjects/informatics/quiz/:id"
                 element={<InforQuizDetail />}
               />
+              <Route
+                path="/subjects/informatics/quiz/:id/generate"
+                element={<InforQuizGenerate />}
+              />
 
               <Route
                 path="/subjects/science/music"
@@ -141,6 +152,10 @@ function App() {
               <Route
                 path="/subjects/science/quiz/:id"
                 element={<ScienceQuizDetail />}
+              />
+              <Route
+                path="/subjects/science/quiz/:id/generate"
+                element={<ScienceQuizGenerate />}
               />
             </Route>
 

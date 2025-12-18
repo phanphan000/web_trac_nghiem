@@ -178,12 +178,16 @@ export default function QuizApp() {
 
   if (!questions || questions.length === 0)
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <div className="bg-white rounded-2xl shadow-lg p-8 text-center max-w-lg w-full">
-          <h2 className="text-xl font-semibold">Chưa có câu hỏi</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Xin hãy nạp bộ câu hỏi trước khi bắt đầu.
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <p className="text-xl font-semibold text-[var(--color-secondary)] mb-4">
+            Đang tải câu hỏi
           </p>
+          <div className="flex gap-2 justify-center">
+            <div className="w-3 h-3 bg-[var(--color-btn)] rounded-full animate-bounce"></div>
+            <div className="w-3 h-3 bg-[var(--color-btn)] rounded-full animate-bounce [animation-delay:0.2s]"></div>
+            <div className="w-3 h-3 bg-[var(--color-btn)] rounded-full animate-bounce [animation-delay:0.4s]"></div>
+          </div>
         </div>
       </div>
     );

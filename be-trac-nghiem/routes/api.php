@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\QuizController;
 // use App\Http\Controllers\SubjectController;
 // use App\Http\Controllers\TopicController;
 
@@ -49,4 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Topic
     Route::get('/subjects/{id}/topics', [\App\Http\Controllers\TopicController::class, 'bySubject']);
+
+    //Generate quiz
+    Route::post('/generate-quiz', [QuizController::class, 'generateQuiz']);
 });

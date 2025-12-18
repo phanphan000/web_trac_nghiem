@@ -14,29 +14,29 @@ export default function TopicList() {
         {
           text: "Phần cứng máy tính",
           img: "/assets/students/Slide 48/164.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/1/generate?sub=phan-cung-may-tinh",
         },
         {
           text: "Phần mềm máy tính",
           img: "/assets/students/Slide 48/165.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/1/generate?sub=phan-mem-may-tinh",
         },
       ],
     },
     {
       id: "2",
-      text: "ĐẠO ĐỨC, PHÁP LUẬT  TRONG MÔI TRƯỜNG SỐ",
+      text: "ĐẠO ĐỨC, PHÁP LUẬT TRONG MÔI TRƯỜNG SỐ",
       img: "/assets/students/slide 49/166.png",
       cards: [
         {
           text: "Bảo vệ thông tin cá nhân",
           img: "/assets/students/slide 49/167.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/2/generate?sub=bao-ve-thong-tin-ca-nhan",
         },
         {
-          text: "Sử dụng công nghệ ",
+          text: "Sử dụng công nghệ",
           img: "/assets/students/slide 49/168.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/2/generate?sub=su-dung-cong-nghe",
         },
       ],
     },
@@ -48,12 +48,12 @@ export default function TopicList() {
         {
           text: "Lưu trữ thông tin",
           img: "/assets/students/Slide 50/170.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/3/generate?sub=luu-tru-thong-tin",
         },
         {
           text: "Tìm kiếm thông tin",
           img: "/assets/students/Slide 50/171.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/3/generate?sub=tim-kiem-thong-tin",
         },
       ],
     },
@@ -65,22 +65,22 @@ export default function TopicList() {
         {
           text: "WordArt, Send to Back, Bring to front",
           img: "/assets/students/Slide 51/173.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/4/generate?sub=wordart-send-to-back-bring-to-front",
         },
         {
           text: "Hiệu ứng Animations",
           img: "/assets/students/Slide 51/174.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/4/generate?sub=hieu-ung-animations",
         },
         {
           text: "Hiệu ứng Transition",
           img: "/assets/students/Slide 51/175.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/4/generate?sub=hieu-ung-transition",
         },
         {
           text: "Làm quen với bảng tính",
           img: "/assets/students/Slide 51/176.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/4/generate?sub=lam-quen-voi-bang-tinh",
         },
       ],
     },
@@ -92,12 +92,12 @@ export default function TopicList() {
         {
           text: "Scratch 1",
           img: "/assets/students/Slide 52/180.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/5/generate?sub=scratch-1",
         },
         {
           text: "Scratch 2",
           img: "/assets/students/Slide 52/181.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/5/generate?sub=scratch-2",
         },
       ],
     },
@@ -109,12 +109,12 @@ export default function TopicList() {
         {
           text: "Swift PlayGround 1",
           img: "/assets/students/Slide 53/184.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/6/generate?sub=swift-playground-1",
         },
         {
           text: "Swift PlayGround 2",
           img: "/assets/students/Slide 53/185.png",
-          link: "#",
+          link: "/subjects/informatics/quiz/6/generate?sub=swift-playground-2",
         },
       ],
     },
