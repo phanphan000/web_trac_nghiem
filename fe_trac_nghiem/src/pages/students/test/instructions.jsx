@@ -1,6 +1,5 @@
 // src/pages/students/test/Instructions.jsx
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { MousePointerClick } from "lucide-react";
 import { Target } from "lucide-react";
 import { Zap } from "lucide-react";
@@ -8,8 +7,9 @@ import { FlaskConical } from "lucide-react";
 import { Laptop2 } from "lucide-react";
 import { Clock } from "lucide-react";
 import { Rocket } from "lucide-react";
+import SubjectSelect from "../../../components/SubjectSelect";
 export default function Instructions() {
-  const navigate = useNavigate();
+  const [showSubjectSelect, setShowSubjectSelect] = useState(false);
 
   return (
     <div className="flex items-center justify-center h-screen primary-text-color">
@@ -55,7 +55,7 @@ export default function Instructions() {
             <div className="flex items-center gap-2">
               <Clock size={20} className="sm:w-6 sm:h-6" color="blue" />
               <h1 className="text-base sm:text-lg lg:text-2xl">
-                Bạn có 30 phút để hoàn thành tất cả!
+                Bạn có 45 phút để hoàn thành tất cả!
               </h1>
             </div>
 
@@ -73,7 +73,7 @@ export default function Instructions() {
         {/* Nút START */}
         <div className="flex justify-center mt-8 lg:mt-0">
           <button
-            onClick={() => navigate("/test/exam")}
+            onClick={() => setShowSubjectSelect(true)}
             className="border border-black group flex items-center justify-center gap-2 text-base sm:text-lg lg:text-xl bg-yellow-500 rounded-full px-6 sm:px-8 py-3 sm:py-4 hover:bg-yellow-300 transition-colors lg:absolute lg:bottom-10"
           >
             <span className="text-blue-900 font-bold">START</span>
@@ -81,6 +81,9 @@ export default function Instructions() {
           </button>
         </div>
       </div>
+      {showSubjectSelect && (
+        <SubjectSelect onClose={() => setShowSubjectSelect(false)} />
+      )}
     </div>
   );
 }

@@ -141,30 +141,34 @@ const QuizPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center pt-10">
+    <div className="min-h-screen flex flex-col justify-center pt-20 md:pt-0">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
+        <h1 className="text-4xl font-bold text-gray-800 mb-3 md:mb-8 text-center">
           🧠 Quiz Học Tập
         </h1>
 
         <div className="space-y-5">
           {quizData.map((subject, index) => (
             <div key={index} className="rounded-2xl shadow-lg overflow-hidden">
-              <div className="flex flex-col md:flex-row max-h-[180px] overflow-hidden">
+              <div className="flex flex-col md:flex-row md:max-h-[180px] overflow-hidden">
                 {/* Phần 1: Tên môn học */}
                 <div
                   className="md:w-48 bg-[#ffecca] px-6 flex flex-col items-center justify-center text-white"
                   onClick={() => navigate(subject.link)}
                 >
-                  <img src={subject.img} alt={subject.subject} />
-                  <div className="mt-4 text-sm primary-text-color">
+                  <img
+                    src={subject.img}
+                    alt={subject.subject}
+                    className="scale-70 md:scale-100"
+                  />
+                  <div className="mt-0 md:mt-4 text-sm primary-text-color">
                     {subject.topics.length} chủ đề
                   </div>
                 </div>
 
                 {/* Phần 2: Grid các chủ đề */}
-                <div className="w-full flex-1 p-2 h-[180px] overflow-hidden">
-                  <div className="grid grid-cols-3 gap-2">
+                <div className="w-full flex-1 p-2 md:h-[180px] overflow-hidden">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {subject.topics.map((topic) => (
                       <div
                         key={topic.id}
@@ -173,11 +177,11 @@ const QuizPage = () => {
                         }
                         className="group cursor-pointer hover:scale-105 transition-transform duration-200"
                       >
-                        <div className="bg-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md h-[80px] flex items-center justify-center">
+                        <div className="bg-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md h-[80px] flex flex-col md:flex-row items-center justify-center">
                           <img
                             src={topic.image}
                             alt={topic.name}
-                            className=" w-[50px] h-[50px] object-cover"
+                            className="w-[50px] h-[50px] object-cover"
                           />
                           <div className="p-1 primary-text-color">
                             <h3 className="text-center text-xs font-medium group-hover:text-[var(--color-secondary)]">

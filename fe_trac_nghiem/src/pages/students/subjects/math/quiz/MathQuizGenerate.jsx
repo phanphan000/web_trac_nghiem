@@ -11,35 +11,23 @@ const MathQuizGenerate = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const subTopic = searchParams.get("sub");
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
         const token = localStorage.getItem("token");
-        console.log("token:", token);
-
-        // gọi API lấy lớp học sinh
-        const userRes = await fetch("http://localhost:8000/api/user", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const user = await userRes.json();
-        console.log("Lớp của học sinh:", user.class_id);
-
         // gọi API generate quiz
-        const res = await fetch("http://localhost:8000/api/generate-quiz", {
+        const res = await fetch(`${API_BASE}/api/generate-quiz`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            questionCount: 5,
+            questionCount: 10,
             topic: id,
             subTopic,
-            level: `Lớp ${user.class_id}`,
           }),
         });
         const data = await res.json();
@@ -109,12 +97,6 @@ const MathQuizGenerate = () => {
             <div className="text-center mb-4 text-gray-600 flex gap-4 justify-center">
               <p>
                 Chủ đề: <strong>{quiz.quizMeta.topic}</strong>
-              </p>
-              <p>
-                Trình độ: <strong>{quiz.quizMeta.level}</strong>
-              </p>
-              <p>
-                Số câu hỏi: <strong>{quiz.quizMeta.questionCount}</strong>
               </p>
             </div>
 

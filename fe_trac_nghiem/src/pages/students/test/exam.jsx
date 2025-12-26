@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 export default function QuizApp() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [testId, setTestId] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -13,7 +15,11 @@ export default function QuizApp() {
   const [timeLeft, setTimeLeft] = useState(null); // in seconds
   const [duration, setDuration] = useState(0); // phút
   const timerRef = useRef(null);
-
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const subjectId = params.get("subject_id");
+  const mode = searchParams.get("mode");
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     if (duration > 0) {
       setTimeLeft(duration * 60);
@@ -35,8 +41,32 @@ export default function QuizApp() {
   useEffect(() => {
     async function fetchQuestions() {
       try {
-        const res = await fetch("/api/tests/latest"); // test_id mới nhất
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const url =
+          mode === "combined"
+            ? `${API_BASE}/api/tests/start?mode=combined`
+            : subjectId
+            ? `${API_BASE}/api/tests/start/${subjectId}`
+            : null;
+
+        if (!url) return;
+
+        const res = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (res.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/login");
+          return;
+        }
         const data = await res.json();
+        setTestId(data.test.id);
         console.log("API response1:", data);
         console.log("Questions from API:", data.questions);
 
@@ -62,7 +92,7 @@ export default function QuizApp() {
     }
 
     fetchQuestions();
-  }, []);
+  }, [subjectId, mode]);
 
   function handleSelect(optionIndex) {
     if (showAnswer) return; // don't change after showing
@@ -92,15 +122,16 @@ export default function QuizApp() {
       setShowIncompleteWarning(true);
       return; // dừng lại, chờ user chọn nút
     }
+    if (!testId) {
+      console.error(" Không có testId – không thể submit");
+      alert("Lỗi hệ thống: không xác định được đề thi");
+      return;
+    }
 
     console.log("Cấu trúc questions:", questions);
     clearInterval(timerRef.current);
 
     // Chuẩn bị payload gửi lên backend
-    const res = await fetch("/api/tests/latest"); // test_id mới nhất
-    const data = await res.json();
-    console.log("cấu trúc data:", data);
-
     const letters = ["A", "B", "C", "D"];
     const payload = {
       answers: questions.map((q, i) => ({
@@ -121,8 +152,6 @@ export default function QuizApp() {
         currentScore++;
       }
     });
-
-    const testId = data.test.id; // hoặc data.id nếu format khác
 
     try {
       const res = await fetch(`/api/tests/${testId}/submit`, {
@@ -251,7 +280,7 @@ export default function QuizApp() {
           <div>
             <h2 className="text-lg sm:text-2xl font-bold">Bài kiểm tra vui</h2>
             <p className="text-xs sm:text-sm text-gray-600">
-              Dành cho học sinh tiểu học — Hãy chọn đáp án đúng.
+              Hãy chọn đáp án đúng.
             </p>
           </div>
           <div className="text-left sm:text-right">

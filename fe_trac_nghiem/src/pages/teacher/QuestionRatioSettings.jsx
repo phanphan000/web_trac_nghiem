@@ -7,9 +7,10 @@ const QuestionCountSettings = () => {
   const [activeSubject, setActiveSubject] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    fetch("/api/subjects", {
+    fetch(`${API_BASE}/api/subjects`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
@@ -178,7 +179,7 @@ const QuestionCountSettings = () => {
 
     console.log("Payload gửi lên API:", payload);
     // Gửi sang backend
-    fetch("/api/tests", {
+    fetch(`${API_BASE}/api/tests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('subject_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('title');
             $table->integer('duration'); // phút
+            $table->unsignedInteger('max_score')->default(30);
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('cascade');
             // $table->foreignId('class_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();

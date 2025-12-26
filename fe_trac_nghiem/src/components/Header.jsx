@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import DropdownItem from "./DropdownItem";
 
 const Header = ({ onLogout, onRegisterClick }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token"); // kiểm tra token
   const [isOpen, setIsOpen] = useState(false);
+
+  const items = [
+    { label: "Toán", onClick: () => navigate("/test/exam?subject_id=1") },
+    { label: "Tin học", onClick: () => navigate("/test/exam?subject_id=2") },
+    { label: "Science", onClick: () => navigate("/test/exam?subject_id=3") },
+    { label: "Tổng hợp", onClick: () => navigate("/test/exam?mode=combined") },
+  ];
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -63,9 +71,57 @@ const Header = ({ onLogout, onRegisterClick }) => {
           </nav>
         ) : (
           <nav className="flex items-center gap-10 justify-end text-lg md:text-2xl primary-text-color">
-            <Link to="/test" className="hover:text-[var(--color-secondary)]">
-              Test
-            </Link>
+            <div className="relative group">
+              {/* Trigger */}
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[var(--color-secondary)]">
+                <Link
+                  to="/test"
+                  className="flex items-center gap-1 hover:text-[var(--color-secondary)]"
+                >
+                  <span>Test</span>
+                  <svg
+                    className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </Link>
+              </div>
+
+              {/* Dropdown */}
+              <div
+                className="
+      absolute top-full left-1/2 -translate-x-1/2
+      mt-3 w-48
+      rounded-2xl
+      bg-white/80 backdrop-blur-md
+      shadow-xl
+      opacity-0 invisible
+      group-hover:opacity-100 group-hover:visible
+      transition-all duration-200
+    "
+              >
+                <div className="flex flex-col py-2">
+                  {items.map((item) => (
+                    <button
+                      key={item.label}
+                      onClick={item.onClick}
+                      className="relative px-5 py-2 text-left group/item overflow-hidden hover:bg-gray-100/60 hover:text-[var(--color-secondary)]"
+                    >
+                      {item.label}
+                      <span
+                        className="absolute left-0 bottom-0 h-[2px] w-full bg-[var(--color-primary)]
+      scale-x-0 origin-left transition-transform duration-300 group-hover/item:scale-x-100"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <Link
               to="/subjects"
               className="hover:text-[var(--color-secondary)]"

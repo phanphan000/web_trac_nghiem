@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class QuizController extends Controller
 {
@@ -14,24 +15,31 @@ class QuizController extends Controller
     public function generateQuiz(Request $request)
     {
         // 1. Validate dữ liệu từ frontend
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'questionCount' => 'required|integer|min:1|max:20',
             'topic' => 'required|string',
             'subTopic' => 'nullable|string',
-            'level' => 'required|string',
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = $request->user();
+        $classId = $user->class_id;
+        $level = 'Lớp ' . $classId;
 
         $questionCount = $request->input('questionCount');
         $topic = $request->input('topic');
         $subTopic = $request->input('subTopic', '');
-        $level = $request->input('level');
 
         // 2. Tạo prompt
         $prompt = "
 Bạn là một hệ thống tạo câu hỏi trắc nghiệm.
 
 Hãy tạo chính xác {$questionCount} câu hỏi trắc nghiệm bằng tiếng Việt
-về chủ đề {$topic} / {$subTopic}, phù hợp với trình độ {$level}.
+về chủ đề {$topic} / {$subTopic}, phù hợp với trình độ {$level} (học sinh).
 
 YÊU CẦU BẮT BUỘC:
 - Chỉ trả về JSON thuần (plain JSON)
